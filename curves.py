@@ -26,7 +26,7 @@ plot_configuration = {
   }
 }
 
-curve_family = fc.Family()
+curve_family = fc.Family(125)
 
 curve_family.calibration_scale = step_tablet
 for k in ordered_configurations:
@@ -42,6 +42,9 @@ for curve in curve_family.curves:
   plotter.add(fc.plotter.SbrPlotter(curve, offset_multiplier=6 - i))
   
 plotter.add(fc.plotter.IdMinMaxPlotter(curve_family, include_revised=True))  
+
+annotation_options = dict([(name, { 'color': plot_configuration[name]['plot_options']['color'] }) for name in plot_configuration])
+plotter.add(fc.plotter.SpeedPointPlotter(curve_family, annotation_options=annotation_options))
   
 plotter.scale_for(curve_family)
 plotter.render()

@@ -7,6 +7,7 @@ class Curve(object):
     self.name = name
     self.data = data
     self.calibration_scale = calibration_scale
+    self.iso_film_speeds = [1600, 1300, 1000, 800, 650, 500, 400, 320, 250, 200, 160, 125, 100, 80, 64, 50, 40, 32, 25, 20, 16, 12, 10]
     
   @property
   def data(self):
@@ -78,6 +79,16 @@ class Curve(object):
     return root_in_range    
     
   @property
+  # Defining the iso_gradient as the slope that covers a vertical rise of .8 from id_min
+  # Note that we switch the direction of the slope to give ourselvesa positive value
   def iso_gradient(self):
-    slope_point = (self.id_min[0] + 1.3, self.best_fit_poly(self.id_min[0] + 1.3))
-    return (self.id_min[1] - slope_point[1]) - (slope_point[0] - self.id_min[0])
+    slope_point_y = self.id_min[1] + .8
+    slope_point_x = self._find_root_in_range(self.best_fit_poly - slope_point_y, fuzzy_min=True)
+    slope_point = (slope_point_x, slope_point_y)
+    return (slope_point[1] - self.id_min[1]) / (self.id_min[0] - slope_point[0])
+    
+  def calc_effective_speed(self, speed_point, iso_speed):
+    third_stops_off = round((speed_point[0] - self.id_min[0]) / .1)
+    iso_index = self.iso_film_speeds.index(iso_speed)
+    return self.iso_film_speeds[iso_index + int(third_stops_off)]
+    
