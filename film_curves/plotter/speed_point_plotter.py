@@ -14,14 +14,22 @@ class SpeedPointPlotter(PlotElement):
     
     self._add_speed_annotation(self.curve_family.iso_speed, self.curve_family.speed_point)
     
-    for curve in self.curve_family.curves:
+    i = 0
+    for curve in self.curve_family.curves:      
       effective_speed, point = self.curve_family.calc_effective_speed_and_point_for(curve)
       annotation_options = self.annotation_options.get(curve.name, {})
+      annotation_options = dict(annotation_options.items() + { 'offset': (20 + ((self.curve_family.curve_count - i) * 30), 0) }.items())
       self._add_speed_annotation(effective_speed, point, **annotation_options)
+      i += 1
     
   def _add_speed_annotation(self, text, point, **kws):
+    position = 0, -50 - point[1]
+    if 'offset' in kws:
+      position = position[0] + kws['offset'][0], position[1] + kws['offset'][1]
+      del kws['offset']
+      
     options = { 'xy': point,
-                'xytext': (0, -50 - point[1]),
+                'xytext': position,
                 'textcoords': 'offset points',
                 'horizontalalignment': 'center',
                 'arrowprops': dict(arrowstyle="->"),

@@ -38,6 +38,10 @@ class Family(object):
     for curve_name in self._ordered_curves:
       yield self._curves[curve_name]
       
+  @property
+  def curve_count(self):
+    return len(self._curves)      
+      
   def curve(self, name):
     return self._curves[name]      
       
