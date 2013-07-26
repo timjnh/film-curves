@@ -7,7 +7,6 @@ class Curve(object):
     self.name = name
     self.data = data
     self.calibration_scale = calibration_scale
-    self.iso_film_speeds = [1600, 1300, 1000, 800, 650, 500, 400, 320, 250, 200, 160, 125, 100, 80, 64, 50, 40, 32, 25, 20, 16, 12, 10]
     
   @property
   def data(self):
@@ -59,6 +58,10 @@ class Curve(object):
   def id_max_revised(self):
     return self._calc_id_max(self.id_min_revised[1])
     
+  def intercept(self, poly):
+    x = self._find_root_in_range(self.best_fit_poly - poly, fuzzy_min=True)
+    return x, self.best_fit_poly(x)
+    
   def _find_root_in_range(self, poly, fuzzy_min=False):
     root_in_range = None
     largest_root_below_range = None
@@ -85,10 +88,4 @@ class Curve(object):
     slope_point_y = self.id_min[1] + .8
     slope_point_x = self._find_root_in_range(self.best_fit_poly - slope_point_y, fuzzy_min=True)
     slope_point = (slope_point_x, slope_point_y)
-    return (slope_point[1] - self.id_min[1]) / (self.id_min[0] - slope_point[0])
-    
-  def calc_effective_speed(self, speed_point, iso_speed):
-    third_stops_off = round((speed_point[0] - self.id_min[0]) / .1)
-    iso_index = self.iso_film_speeds.index(iso_speed)
-    return self.iso_film_speeds[iso_index + int(third_stops_off)]
-    
+    return (slope_point[1] - self.id_min[1]) / (self.id_min[0] - slope_point[0])    

@@ -11,6 +11,8 @@ class Family(object):
     
     self.iso_gradient = .8 / 1.3
     self.iso_speed = iso_speed
+    
+    self.iso_film_speeds = [1600, 1300, 1000, 800, 650, 500, 400, 320, 250, 200, 160, 125, 100, 80, 64, 50, 40, 32, 25, 20, 16, 12, 10]
   
   def add_curve(self, *args):
     if len(args) == 1:
@@ -102,4 +104,11 @@ class Family(object):
     if max_gradient is None:
       raise StandardError("No gradient was greater than the ISO standard!  You probably need to change your development times")
       
-    return min_gradient, max_gradient  
+    return min_gradient, max_gradient 
+    
+  def calc_effective_speed_and_point_for(self, curve):
+    intercept = curve.intercept(self.id_min_revised_best_fit_poly)
+    
+    third_stops_off = round((self.speed_point[0] - intercept[0]) / .1)
+    iso_index = self.iso_film_speeds.index(self.iso_speed)
+    return self.iso_film_speeds[iso_index + int(third_stops_off)], intercept

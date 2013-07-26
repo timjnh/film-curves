@@ -15,9 +15,9 @@ class SpeedPointPlotter(PlotElement):
     self._add_speed_annotation(self.curve_family.iso_speed, self.curve_family.speed_point)
     
     for curve in self.curve_family.curves:
-      effective_speed = curve.calc_effective_speed(self.curve_family.speed_point, self.curve_family.iso_speed)
+      effective_speed, point = self.curve_family.calc_effective_speed_and_point_for(curve)
       annotation_options = self.annotation_options.get(curve.name, {})
-      self._add_speed_annotation(effective_speed, curve.id_min, **annotation_options)
+      self._add_speed_annotation(effective_speed, point, **annotation_options)
     
   def _add_speed_annotation(self, text, point, **kws):
     options = { 'xy': point,
