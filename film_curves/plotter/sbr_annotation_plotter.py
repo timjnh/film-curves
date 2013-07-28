@@ -1,7 +1,7 @@
 from plot_element import PlotElement
 import matplotlib.pyplot as plt
 
-class SbrPlotter(PlotElement):
+class SbrAnnotationPlotter(PlotElement):
   def __init__(self, curve, **kws):
     self.offset_multiplier = 1
     PlotElement.__init__(self, ['offset_multiplier'], kws)

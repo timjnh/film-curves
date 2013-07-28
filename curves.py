@@ -39,7 +39,7 @@ for curve in curve_family.curves:
   
   plot_options = dict(plot_configuration[curve.name]['plot_options'].items() + { 'include_points': True }.items())
   plotter.add(fc.plotter.CurvePlotter(curve, **plot_options))
-  plotter.add(fc.plotter.SbrPlotter(curve, offset_multiplier=6 - i))
+  plotter.add(fc.plotter.SbrAnnotationPlotter(curve, offset_multiplier=6 - i))
   
 plotter.add(fc.plotter.IdMinMaxPlotter(curve_family, include_revised=True))  
 
