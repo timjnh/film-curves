@@ -8,7 +8,7 @@ class SbrAnnotationPlotter(PlotElement):
     self.curve = curve
   
   def render(self):
-    sbr_stops = (self.curve.id_min_revised[0] - self.curve.id_max_revised[0]) / .3
+    sbr_stops = self.curve.subject_brightness_range / .3
     plt.annotate('SBR {:0.1f} stops'.format(sbr_stops),
                 xy=self.curve.id_max_revised,
                 xytext=(-50, 30 * self.offset_multiplier), textcoords='offset points',

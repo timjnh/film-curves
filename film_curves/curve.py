@@ -88,4 +88,13 @@ class Curve(object):
     slope_point_y = self.id_min[1] + .8
     slope_point_x = self._find_root_in_range(self.best_fit_poly - slope_point_y, fuzzy_min=True)
     slope_point = (slope_point_x, slope_point_y)
-    return (slope_point[1] - self.id_min[1]) / (self.id_min[0] - slope_point[0])    
+    return (slope_point[1] - self.id_min[1]) / (self.id_min[0] - slope_point[0])  
+    
+  @property
+  def subject_brightness_range(self):
+    return self.id_min_revised[0] - self.id_max_revised[0]
+    
+  @property
+  def zone_development(self):
+    zone_length = self.subject_brightness_range / 7.0
+    return (1.2 - (zone_length * 4)) / .3
