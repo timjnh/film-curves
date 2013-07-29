@@ -5,3 +5,4 @@ from plotter import *
 from sbr_annotation_plotter import *
 from speed_point_plotter import *
 from zone_development_annotation_plotter import *
+from curve_annotation_plotter import *
