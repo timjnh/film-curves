@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from plot_element import PlotElement
 
-class Plotter(object):
+class CurveFamilyPlotter(PlotElement):
   def __init__(self):
     self.elements = []
     self._min_x_range = None
@@ -14,9 +15,7 @@ class Plotter(object):
   def render(self):
     for element in self.elements:
       element.render()
-    
     self._finalizeLookNFeel()
-    plt.show()
     
   def _finalizeLookNFeel(self):
     plt.grid(linestyle='-.', linewidth=1, color='grey')    

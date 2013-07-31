@@ -3,8 +3,9 @@ from util.cached_property import cached_property
 import numpy as np
 
 class Curve(object):
-  def __init__(self, name, data, calibration_scale):
+  def __init__(self, name, time, data, calibration_scale):
     self.name = name
+    self.time = time
     self.data = data
     self.calibration_scale = calibration_scale
     

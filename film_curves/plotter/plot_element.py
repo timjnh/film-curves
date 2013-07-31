@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 class PlotElement(object):
   def __init__(self, valid_options, kws):
     self.min_x_range = None
@@ -11,3 +13,6 @@ class PlotElement(object):
   
   def render(self):
     raise NotImplementedError("The base class PlotElement does not implement render")
+    
+  def show(self):
+    plt.show();

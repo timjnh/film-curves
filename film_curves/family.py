@@ -1,5 +1,6 @@
 from curve import Curve
 import numpy as np
+from scipy import optimize
 from util.cached_property import cached_property
 from util.quick_list import QuickList
 
@@ -19,7 +20,7 @@ class Family(object):
       curve = args[0]
       curve.calibration_scale = self._calibration_scale
     else:
-      curve = Curve(args[0], args[1], self._calibration_scale)
+      curve = Curve(args[0], args[1], args[2], self._calibration_scale)
     self._ordered_curves.append(curve.name)
     self._curves[curve.name] = curve
     
@@ -116,3 +117,15 @@ class Family(object):
     third_stops_off = round((self.speed_point[0] - intercept[0]) / .1)
     iso_index = self.iso_film_speeds.index(self.iso_speed)
     return self.iso_film_speeds[iso_index + int(third_stops_off)], intercept
+    
+  def _exponential_function(self, x, a, b, c):
+    return (b * (a ** x)) + c
+    
+  @cached_property
+  def zone_development_best_fit_poly(self):    
+    x, y = zip(*[ (curve.time, curve.zone_development) for curve in self.curves ])
+    
+    popt, pcov = optimize.curve_fit(self._exponential_function, x, y, p0 = [1, 1, 1])
+    def best_fit(x):
+      return self._exponential_function(x, *popt)
+    return best_fit
