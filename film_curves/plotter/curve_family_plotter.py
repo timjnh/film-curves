@@ -1,11 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from plot_element import PlotElement
+from root_plot_element import RootPlotElement
 
-class CurveFamilyPlotter(PlotElement):
+class CurveFamilyPlotter(RootPlotElement):
   def __init__(self):
     self.elements = []
-    self._min_x_range = None
+    self._min_x_range = None    
+    
+    RootPlotElement.__init__(self, [], {})
     
   def add(self, element):
     if self._min_x_range is not None:

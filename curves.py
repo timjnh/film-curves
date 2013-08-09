@@ -64,5 +64,6 @@ sub_plot_plotter = fc.plotter.SubPlotPlotter(1, 2)
 sub_plot_plotter.add_plotter(build_curve_plotter(curve_family))
 sub_plot_plotter.add_plotter(build_zone_development_plotter(curve_family))
 
+sub_plot_plotter.clear()
 sub_plot_plotter.render()
 sub_plot_plotter.show()

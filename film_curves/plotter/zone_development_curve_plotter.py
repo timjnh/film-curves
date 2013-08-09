@@ -1,14 +1,14 @@
-from plot_element import PlotElement
+from root_plot_element import RootPlotElement
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import ticker
 
-class ZoneDevelopmentCurvePlotter(PlotElement):
+class ZoneDevelopmentCurvePlotter(RootPlotElement):
   def __init__(self, curve_family, **kws):
     self.min_development_time = 3
     self.max_development_time = 25
     self.include_points = False
-    PlotElement.__init__(self, ['min_development_time', 'max_development_time', 'include_points'], kws)
+    RootPlotElement.__init__(self, ['min_development_time', 'max_development_time', 'include_points'], kws)
     
     self.curve_family = curve_family
     self._elements = []

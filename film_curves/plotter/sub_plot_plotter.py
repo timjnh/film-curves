@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
-from plot_element import PlotElement
+from root_plot_element import RootPlotElement
 
-class SubPlotPlotter(PlotElement):
+class SubPlotPlotter(RootPlotElement):
   def __init__(self, rows, cols):
     self.rows = rows
     self.cols = cols
