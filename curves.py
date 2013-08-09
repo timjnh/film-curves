@@ -1,4 +1,5 @@
 import film_curves as fc
+import matplotlib.pyplot as plt
 
 step_tablet = [2.99, 2.84, 2.71, 2.56, 2.44, 2.31, 2.19, 2.04, 1.89, 1.74, 1.57, 1.43, 1.27, 1.12, 0.98, 0.83, 0.66, 0.53, 0.36, 0.2, 0.06, 0]
 
@@ -60,10 +61,6 @@ curve_family.calibration_scale = step_tablet
 for k in ordered_configurations:
   curve_family.add_curve(k, plot_configuration[k]['time'], plot_configuration[k]['data'])
 
-sub_plot_plotter = fc.plotter.SubPlotPlotter(1, 2)
-sub_plot_plotter.add_plotter(build_curve_plotter(curve_family))
-sub_plot_plotter.add_plotter(build_zone_development_plotter(curve_family))
-
-sub_plot_plotter.clear()
-sub_plot_plotter.render()
-sub_plot_plotter.show()
+fc.plotter.PlotFigure.close_all()
+fc.plotter.PlotFigure(build_curve_plotter(curve_family), name='Curve Family').show()
+fc.plotter.PlotFigure(build_zone_development_plotter(curve_family), name='Zone Development').show()
