@@ -15,9 +15,9 @@ class CurveFamilyPlotter(PlotElement):
   def render(self):
     for element in self.elements:
       element.render()
-    self._finalizeLookNFeel()
+    self._finalize_look_n_feel()
     
-  def _finalizeLookNFeel(self):
+  def _finalize_look_n_feel(self):
     plt.grid(linestyle='-.', linewidth=1, color='grey')    
     plt.gca().invert_xaxis()
     plt.legend(loc='best')
