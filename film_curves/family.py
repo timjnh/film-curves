@@ -129,3 +129,8 @@ class Family(object):
     def best_fit(x):
       return self._exponential_function(x, *popt)
     return best_fit
+    
+  def development_time_for_zone(self, n):
+    def y_offset(x):
+      return self.zone_development_best_fit_poly(x) - n
+    return optimize.newton(y_offset, 0)

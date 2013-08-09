@@ -50,7 +50,9 @@ def build_curve_plotter(curve_family):
   return plotter
   
 def build_zone_development_plotter(curve_family):
-  return fc.plotter.ZoneDevelopmentCurvePlotter(curve_family, include_points=True)
+  zdcp = fc.plotter.ZoneDevelopmentCurvePlotter(curve_family, include_points=True)
+  zdcp.add(fc.plotter.ZoneDevelopmentCurveAnnotationPlotter())
+  return zdcp
 
 curve_family = fc.Family(125)
 
