@@ -1,4 +1,4 @@
-from plot_element import PlotElement
+from ..plot_element import PlotElement
 import numpy as np
 import matplotlib.pyplot as plt
 

@@ -1,5 +1,4 @@
 import film_curves as fc
-import matplotlib.pyplot as plt
 
 step_tablet = [2.99, 2.84, 2.71, 2.56, 2.44, 2.31, 2.19, 2.04, 1.89, 1.74, 1.57, 1.43, 1.27, 1.12, 0.98, 0.83, 0.66, 0.53, 0.36, 0.2, 0.06, 0]
 
@@ -34,25 +33,25 @@ plot_configuration = {
 
 def build_curve_plotter(curve_family):
   i = 0
-  plotter = fc.plotter.CurveFamilyPlotter()
+  plotter = fc.plotter.curve_family.CurveFamilyPlotter()
   for curve in curve_family.curves:
     i += 1
   
     plot_options = dict(plot_configuration[curve.name]['plot_options'].items() + { 'include_points': True }.items())
-    plotter.add(fc.plotter.CurvePlotter(curve, **plot_options))
-    plotter.add(fc.plotter.CurveAnnotationPlotter(curve, offset_multiplier=6 - i))
+    plotter.add(fc.plotter.curve_family.CurvePlotter(curve, **plot_options))
+    plotter.add(fc.plotter.curve_family.CurveAnnotationPlotter(curve, offset_multiplier=6 - i))
   
-  plotter.add(fc.plotter.IdMinMaxPlotter(curve_family, include_revised=True))  
+  plotter.add(fc.plotter.curve_family.IdMinMaxPlotter(curve_family, include_revised=True))  
 
   annotation_options = dict([(name, { 'color': plot_configuration[name]['plot_options']['color'] }) for name in plot_configuration])
-  plotter.add(fc.plotter.SpeedPointPlotter(curve_family, annotation_options=annotation_options))
+  plotter.add(fc.plotter.curve_family.SpeedPointPlotter(curve_family, annotation_options=annotation_options))
   
   plotter.scale_for(curve_family)
   return plotter
   
 def build_zone_development_plotter(curve_family):
-  zdcp = fc.plotter.ZoneDevelopmentCurvePlotter(curve_family, include_points=True)
-  zdcp.add(fc.plotter.ZoneDevelopmentCurveAnnotationPlotter())
+  zdcp = fc.plotter.zone_development_curve.ZoneDevelopmentCurvePlotter(curve_family, include_points=True)
+  zdcp.add(fc.plotter.zone_development_curve.ZoneDevelopmentAnnotationPlotter())
   return zdcp
 
 curve_family = fc.Family(125)

@@ -1,4 +1,4 @@
-from root_plot_element import RootPlotElement
+from ..root_plot_element import RootPlotElement
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import ticker

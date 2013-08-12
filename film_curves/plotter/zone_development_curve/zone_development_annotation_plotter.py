@@ -1,7 +1,7 @@
-from plot_element import PlotElement
+from ..plot_element import PlotElement
 import matplotlib.pyplot as plt
 
-class ZoneDevelopmentCurveAnnotationPlotter(PlotElement):
+class ZoneDevelopmentAnnotationPlotter(PlotElement):
   def __init__(self, **kws):
     PlotElement.__init__(self, [], kws)
     

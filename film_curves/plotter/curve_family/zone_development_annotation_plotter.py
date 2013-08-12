@@ -1,4 +1,4 @@
-from annotation_plot_element import AnnotationPlotElement
+from ..annotation_plot_element import AnnotationPlotElement
 
 class ZoneDevelopmentAnnotationPlotter(AnnotationPlotElement):
   def __init__(self, curve, **kws):

@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from root_plot_element import RootPlotElement
+from ..root_plot_element import RootPlotElement
 
 class CurveFamilyPlotter(RootPlotElement):
   def __init__(self):

@@ -1,12 +1,8 @@
-from curve_plotter import *
-from id_min_max_plotter import *
+import curve_family
+import zone_development_curve
+
+from annotation_plot_element import *
 from plot_element import *
-from curve_family_plotter import *
-from sbr_annotation_plotter import *
-from speed_point_plotter import *
-from zone_development_annotation_plotter import *
-from curve_annotation_plotter import *
-from sub_plot_plotter import *
-from zone_development_curve_plotter import *
-from zone_development_curve_annotation_plotter import *
 from plot_figure import *
+from root_plot_element import *
+from sub_plot_plotter import *

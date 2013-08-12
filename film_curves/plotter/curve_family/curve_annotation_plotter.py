@@ -1,4 +1,4 @@
-from annotation_plot_element import AnnotationPlotElement
+from ..annotation_plot_element import AnnotationPlotElement
 from sbr_annotation_plotter import SbrAnnotationPlotter
 from zone_development_annotation_plotter import ZoneDevelopmentAnnotationPlotter
 
