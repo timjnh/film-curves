@@ -3,6 +3,7 @@ import numpy as np
 from scipy import optimize
 from util.cached_property import cached_property
 from util.quick_list import QuickList
+import math
 
 class Family(object):
   def __init__(self, iso_speed):
@@ -111,12 +112,55 @@ class Family(object):
       
     return min_gradient, max_gradient 
     
-  def calc_effective_speed_and_point_for(self, curve):
+  def calc_effective_speed_and_point_for(self, curve, round_speed=True):
     intercept = curve.intercept(self.id_min_revised_best_fit_poly)
     
-    third_stops_off = round((self.speed_point[0] - intercept[0]) / .1)
+    third_stops_off = (self.speed_point[0] - intercept[0]) / .1
     iso_index = self.iso_film_speeds.index(self.iso_speed)
-    return self.iso_film_speeds[iso_index + int(third_stops_off)], intercept
+    
+    if round_speed:
+      return self.iso_film_speeds[iso_index + int(round(third_stops_off))], intercept
+    else:
+      max_speed = self.iso_film_speeds[iso_index + int(math.floor(third_stops_off))]
+      min_speed = self.iso_film_speeds[iso_index + int(math.ceil(third_stops_off))]
+      
+      offset = ((max_speed - min_speed) * math.modf(third_stops_off)[0])
+      if third_stops_off < 0:
+        speed = min_speed - offset
+      else:
+        speed = max_speed - offset
+      return speed, intercept
+
+  def calc_effective_speed_for(self, curve, **kws):
+    speed, speed_point = self.calc_effective_speed_and_point_for(curve, **kws)
+    return speed
+
+  @cached_property    
+  def extended_film_speed_range(self):
+    return self._film_speed_range(extension=2)
+    
+  def _film_speed_range(self, extension=0):
+    curve_speed_indices = [ self.iso_film_speeds.index(self.calc_effective_speed_for(curve)) for curve in self.curves ]
+    
+    max_speed_index = max(curve_speed_indices) + extension
+    min_speed_index = min(curve_speed_indices) - extension
+    if max_speed_index >= len(self.iso_film_speeds):
+      min_speed_index -= max_speed_index - (len(self.iso_film_speeds) - 1)
+      max_speed_index = len(self.iso_film_speeds) - 1
+    if min_speed_index < 0:     
+      max_speed_index += 0 - min_speed_index
+      min_speed_index = 0
+    max_speed_index = min(max_speed_index, len(self.iso_film_speeds) - 1)
+    
+    speed_range = self.iso_film_speeds[min_speed_index:max_speed_index + 1]
+    speed_range.reverse()
+    return speed_range
+    
+  @cached_property
+  def zone_film_speed_best_fit_poly(self):
+    x = [ self.calc_effective_speed_for(curve, round_speed=False) for curve in self.curves ]
+    y = [ curve.zone_development for curve in self.curves ]
+    return np.poly1d(np.polyfit(x, y, 1))
     
   def _exponential_function(self, x, a, b, c):
     return (b * (a ** x)) + c

@@ -54,6 +54,9 @@ def build_zone_development_plotter(curve_family):
   zdcp.add(fc.plotter.zone_development_curve.ZoneDevelopmentAnnotationPlotter())
   return zdcp
 
+def build_zone_film_speed_plotter(curve_family):
+  return fc.plotter.zone_film_speed_curve.ZoneFilmSpeedPlotter(curve_family, include_points=True)
+
 curve_family = fc.Family(125)
 
 curve_family.calibration_scale = step_tablet
@@ -62,4 +65,8 @@ for k in ordered_configurations:
 
 fc.plotter.PlotFigure.close_all()
 fc.plotter.PlotFigure(build_curve_plotter(curve_family), name='Curve Family').show()
-fc.plotter.PlotFigure(build_zone_development_plotter(curve_family), name='Zone Development').show()
+
+zone_development_and_film_speed_plotter = fc.plotter.SubPlotPlotter(1, 2)
+zone_development_and_film_speed_plotter.add(build_zone_development_plotter(curve_family))
+zone_development_and_film_speed_plotter.add(build_zone_film_speed_plotter(curve_family))
+fc.plotter.PlotFigure(zone_development_and_film_speed_plotter, name='Zone Development and Film Speed').show()

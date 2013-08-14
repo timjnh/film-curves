@@ -1,5 +1,6 @@
 import curve_family
 import zone_development_curve
+import zone_film_speed_curve
 
 from annotation_plot_element import *
 from plot_element import *
