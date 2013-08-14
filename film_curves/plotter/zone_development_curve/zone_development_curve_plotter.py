@@ -11,11 +11,10 @@ class ZoneDevelopmentCurvePlotter(RootPlotElement):
     RootPlotElement.__init__(self, ['min_development_time', 'max_development_time', 'include_points'], kws)
     
     self.curve_family = curve_family
-    self._elements = []
     
   def add(self, element):
     element.curve_family = self.curve_family
-    self._elements.append(element)
+    RootPlotElement.add(self, element)    
     
   def render(self):
     x_range = np.linspace(self.min_development_time, self.max_development_time, 50)
@@ -29,10 +28,8 @@ class ZoneDevelopmentCurvePlotter(RootPlotElement):
       y.append(1)
       plt.plot(x, y, '.', color='blue')
       
-    for element in self._elements:
-      element.render()
+    RootPlotElement.render(self)
     self._finalize_look_n_feel()
-      
       
   def _finalize_look_n_feel(self):
     plt.grid(linestyle='-.', linewidth=1, color='grey') 

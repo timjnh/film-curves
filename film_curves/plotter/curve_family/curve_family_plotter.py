@@ -4,19 +4,16 @@ from ..root_plot_element import RootPlotElement
 
 class CurveFamilyPlotter(RootPlotElement):
   def __init__(self):
-    self.elements = []
-    self._min_x_range = None    
-    
+    self._min_x_range = None
     RootPlotElement.__init__(self, [], {})
     
   def add(self, element):
     if self._min_x_range is not None:
       element.min_x_range = self._min_x_range
-    self.elements.append(element)
+    RootPlotElement.add(self, element)
   
   def render(self):
-    for element in self.elements:
-      element.render()
+    RootPlotElement.render(self)
     self._finalize_look_n_feel()
     
   def _finalize_look_n_feel(self):

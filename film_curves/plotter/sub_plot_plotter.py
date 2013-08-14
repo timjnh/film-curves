@@ -5,17 +5,11 @@ class SubPlotPlotter(RootPlotElement):
   def __init__(self, rows, cols):
     self.rows = rows
     self.cols = cols
-    self.plotters = []
-    
-  def add_plotter(self, plotter):
-    self.plotters.append(plotter)
+    RootPlotElement.__init__(self, [], {})
     
   def render(self):
     i = 0
-    for plotter in self.plotters:
+    for element in self.elements:
       i += 1
       plt.subplot(self.rows, self.cols, i)
-      plotter.render()
-      
-    
-  
+      element.render()
