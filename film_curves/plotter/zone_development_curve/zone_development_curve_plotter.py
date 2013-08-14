@@ -22,10 +22,6 @@ class ZoneDevelopmentCurvePlotter(RootPlotElement):
 
     if self.include_points:
       x, y = zip(*[ (curve.time, curve.zone_development) for curve in self.curve_family.curves ])
-      x = list(x)
-      y = list(y)
-      x.append(20)
-      y.append(1)
       plt.plot(x, y, '.', color='blue')
       
     RootPlotElement.render(self)
