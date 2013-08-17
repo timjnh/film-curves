@@ -138,7 +138,7 @@ class Family(object):
 
   @cached_property    
   def extended_film_speed_range(self):
-    return self._film_speed_range(extension=2)
+    return self._film_speed_range(extension=4)
     
   def _film_speed_range(self, extension=0):
     curve_speed_indices = [ self.iso_film_speeds.index(self.calc_effective_speed_for(curve)) for curve in self.curves ]
