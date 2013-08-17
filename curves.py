@@ -55,7 +55,9 @@ def build_zone_development_plotter(curve_family):
   return zdcp
 
 def build_zone_film_speed_plotter(curve_family):
-  return fc.plotter.zone_film_speed_curve.ZoneFilmSpeedPlotter(curve_family, include_points=True)
+  zfscp = fc.plotter.zone_film_speed_curve.ZoneFilmSpeedCurvePlotter(curve_family, include_points=True)
+  zfscp.add(fc.plotter.zone_film_speed_curve.ZoneDevelopmentAnnotationPlotter())
+  return zfscp
 
 curve_family = fc.Family(125)
 

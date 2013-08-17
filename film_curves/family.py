@@ -1,8 +1,9 @@
 from curve import Curve
 import numpy as np
 from scipy import optimize
-from util.cached_property import cached_property
-from util.quick_list import QuickList
+from util import cached_property
+from util import QuickList
+from util import Poly
 import math
 
 class Family(object):
@@ -161,6 +162,9 @@ class Family(object):
     x = [ self.calc_effective_speed_for(curve, round_speed=False) for curve in self.curves ]
     y = [ curve.zone_development for curve in self.curves ]
     return np.poly1d(np.polyfit(x, y, 1))
+    
+  def effective_film_speed_for_zone(self, zone):
+    return Poly.find_root_in_range(self.zone_film_speed_best_fit_poly - zone, (self.iso_film_speeds[-1], self.iso_film_speeds[0]))
     
   def _exponential_function(self, x, a, b, c):
     return (b * (a ** x)) + c

@@ -1,5 +1,6 @@
-from util.quick_list import QuickList
-from util.cached_property import cached_property
+from util import QuickList
+from util import cached_property
+from util import Poly
 import numpy as np
 
 class Curve(object):
@@ -60,27 +61,10 @@ class Curve(object):
     return self._calc_id_max(self.id_min_revised[1])
     
   def intercept(self, poly):
-    x = self._find_root_in_range(self.best_fit_poly - poly, fuzzy_min=True)
-    return x, self.best_fit_poly(x)
+    return Poly.intercept(self.best_fit_poly, poly, (self.calibration_scale.last, self.calibration_scale.first))
     
   def _find_root_in_range(self, poly, fuzzy_min=False):
-    root_in_range = None
-    largest_root_below_range = None
-    
-    sorted_roots = poly.r
-    sorted_roots.sort()
-    
-    for root in sorted_roots:
-      if root < self.calibration_scale.last and (largest_root_below_range is None or root > largest_root_below_range):
-        largest_root_below_range = root
-      if root > self.calibration_scale.last and root < self.calibration_scale.first:
-        root_in_range = root
-        break
-    if root_in_range is None:
-      if fuzzy_min is True and largest_root_below_range is not None:
-        return largest_root_below_range
-      raise StandardError('Could not find valid root!')
-    return root_in_range    
+    return Poly.find_root_in_range(poly, (self.calibration_scale.last, self.calibration_scale.first), fuzzy_min=fuzzy_min)
     
   @property
   # Defining the iso_gradient as the slope that covers a vertical rise of .8 from id_min

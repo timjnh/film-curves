@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import ticker
 
-class ZoneFilmSpeedPlotter(RootPlotElement):
+class ZoneFilmSpeedCurvePlotter(RootPlotElement):
   def __init__(self, curve_family, **kws):
     self.include_points = False
     RootPlotElement.__init__(self, ['include_points'], kws)
