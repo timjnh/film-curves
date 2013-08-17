@@ -10,6 +10,9 @@ class Curve(object):
     self.data = data
     self.calibration_scale = calibration_scale
     
+    self.scale_index = 1
+    self.flare_compensation = .1
+    
   @property
   def data(self):
     return self._data
@@ -44,7 +47,7 @@ class Curve(object):
     return self._calc_id_max(self.id_min[1])
     
   def _calc_id_max(self, id_min_y):
-    id_max_y = id_min_y + 1.16
+    id_max_y = id_min_y + ((self.scale_index * (1 + self.flare_compensation)) + 0.06)
     id_max_x = self._find_root_in_range(self.best_fit_poly - id_max_y, fuzzy_min=True)
     return (id_max_x, id_max_y)
 
